@@ -14,11 +14,16 @@ driver.get("https://www.google.co.kr/imghp?hl=ko&ogbl")
 elem = driver.find_element_by_name("q")  # 이름 혹은 클레스명 
 elem.send_keys("명언") # 거기에 키보드 입력처럼 값 전달 가능 
 elem.send_keys(Keys.RETURN) # 엔터키를 의미함 
-driver.find_elements_by_css_selector(".rg_i.Q4LuWd")[0].click() # css 명을 가지고 선택  브라우저에서 rg_i Q4LuWd 이렇게 되어 있는걸 공백사이에 .으로 연결 그리고 맨앞에 클레스다 알려주는 . 입력
-time.sleep(3)
-imgUrl = driver.find_element_by_css_selector(".n3VNCb.KAlRDb").get_attribute("src")
-urllib.request.urlretrieve(imgUrl, "test.jpg")
-# 이러면 class를 가진 요소를 선택하는 선택자가 됨 
+images = driver.find_elements_by_css_selector(".rg_i.Q4LuWd") # 전체 이지미 리스트를 담아서 
+count = 1 # 이미지 이름 1씩 증가시킬거임 
+
+for image in images:  # 하나씩 이미지를 넣고
+    image.click()   # 클릭 
+    time.sleep(1)
+    imgUrl = driver.find_element_by_css_selector(".n3VNCb.KAlRDb").get_attribute("src") # 3초뒤에 이미지 URL 다운 받아서 
+    urllib.request.urlretrieve(imgUrl, str(count) + ".jpg") 
+    count = count + 1
+
 
 
 
